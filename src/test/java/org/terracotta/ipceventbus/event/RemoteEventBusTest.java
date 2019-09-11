@@ -87,6 +87,11 @@ public class RemoteEventBusTest extends AbstractEventBusTest<EventBusClient> {
         .listenRandom()
         .build();
 
+    // This is just because the accept() call is ran in a thread and there might be some delay between the start of the thread and
+    // when we do accept().
+    // So this is a sleep hoping the accept() call will be made and will block before we try to connect to
+    Thread.sleep(1_000);
+
     peer1.on(listener);
     peer1.on(new EventListenerSniffer("peer1"));
 
